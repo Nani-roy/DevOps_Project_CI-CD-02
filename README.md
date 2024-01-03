@@ -79,11 +79,10 @@ Push all the web application  code files into GitHub
 
 ### Stage-02: Install Jenkins, Docker, Trivy, AWS CLI, Github CLI, Terraform ( t2.large node1 -Jenkins-server)
 #### Jenkins Installation Prerequisites  https://www.jenkins.io/doc/book/installing/linux/
-1. Installation guide is available here  https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Jenkins_installation.md
+1. Installation guide is available on portal.
 2. After installation, install the suggested plugins
 3. Open Jenkins Dashboard and install required plugins – SonarQube Scanner, Quality gates, Artifactory, Hashicorp Vault, Slack, Open Blue Ocean
 4. go to manage Jenkins > manage plugins > search for plugins > Download now and install after restart
-![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/jenkins.png) 
 
 #### Docker Installtion
 1. Install docker using this command 
