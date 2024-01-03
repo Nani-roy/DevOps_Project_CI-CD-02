@@ -5,8 +5,7 @@ In this project, I created an end-to-end Production like CI-CD pipeline  while k
 
 #### I used Jenkins for Continuous Integration and ArgoCD for Continuous Deployment.
 
-## Project Architecture
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/pipeline.png)
+
 ## Pipeline flow:
 1. When an event (commit) will occur in the application code GitHub repo,  the GitHub webhook will push the code to Jenkins and Jenkins will start the build.
 
@@ -77,7 +76,6 @@ if the docker build fails when the whole pipeline will become a failure and Jenk
 ### Stage-01: Install JDK and Create a Java Springboot application
 Push all the web application  code files into GitHub
 
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/Screenshot%20from%202023-06-23%2022-45-05.png)
 
 ### Stage-02: Install Jenkins, Docker, Trivy, AWS CLI, Github CLI, Terraform ( t2.large node1 -Jenkins-server)
 #### Jenkins Installation Prerequisites  https://www.jenkins.io/doc/book/installing/linux/
@@ -186,7 +184,6 @@ Install Slack from the official website of Slack https://slack.com/intl/en-in/do
 
 
 ### Stage-06: EKS Cluster Creation using Terraform 
-To create EKS Cluster using Terraform, I have put the Terraform code here - https://github.com/praveensirvi1212/medicure-project/tree/master/eks_module
 
 `Suggestion – create eks cluster after successful configuration of jenkins server. When jenkins is able to create pull request in the manifest repo.` 
 #### Note: I have installed the terraform in the jenkins server and configured aws cli to create eks cluster. But you can use your local system to create eks cluster . for this, you have to install Terraform and aws cli on your local system.
@@ -323,37 +320,28 @@ vault write -f auth/approle/role/jenkins-role/secret-id
 1. default username-password `admin`  and ` admin`
 ##### Project setup
 1. chose use global setting
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/sonarqube-.png)
 2.  create a project manually, give some name to project, project key
-![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/sonarqubedb.png) 
 3. click on setup
 4. click on other ci 
 5. give some name to the token and click on generate, save it for a later user
 6. click on global
-7. select the project type, in this case, I used Maven
- ![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/soanr.png)  
+7. select the project type, in this case, I used Maven.
 8. copy the whole command and save it somewhere
 
 ##### Create Quality Gate 
 1.  Click on Quality Gates
 1.  create a new Quality Gate according to your conditions
- ![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/quality%20gate.png)
 3.  click on Projects > click on all > select your project
-![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/qualiygate.png   )
-4. set as default
 
 ##### Create webhook
 1. click on Administration
 1. click on Configuration > click on webhooks
 1.  create a webhook > Give some name
 1. for url use `http://jenkins-server-url-with-port/sonarqube-webhook/`
-![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/webhook.png)
 5. in secret leave the blank
 6. click on create
 
 ##### Note: if this webhook does not work fine, then recreate the webhook after integrating the soanrqube with jenkins
-
-
 
 
 ### Stage-04: Artifactory Configuration
@@ -372,7 +360,6 @@ vault write -f auth/approle/role/jenkins-role/secret-id
 ### Stage-06: DockerHub account creation
 If you already have a dockerhub account then no need to create another
 1. go to dockerhub official website
-![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/dockerhub.png)
 2. click on sign up
 3. fill in the details and sing up
 4. login into dockerhub
@@ -392,7 +379,6 @@ Note: we can create token from dockerhub to integrate jenkins but in this case, 
 1. search Jenkins in search bar > click on it 
 1.  click on Add to Slack
 1. select channel name
-![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/slack.png)
 1. click on Add Jenkins CI Integration
 1.  go down  to step 3 and copy Integration Token Credential ID and save it somewhere
 1. click on Save settings
@@ -449,7 +435,6 @@ vault policy write jenkins jenkins-policy.hcl
 ## Step: 4 Integrate all the tools into jenkins for CI
 ### Stage-01: Hashicorp Vault server integration with Jenkins
 1. go to Jenkins>  Manage  Jenkins >Manage Credentials > system > Add credentials > Vault App Role Credentials > Paste role-id and secret-id token (we create in Vault - approle)  and save and apply.
-![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/approleVault.png) 
 2. now to  Manage  Jenkins  >  configure system/system>  search for vault plugin
 3. give the URL of the vault server
 4. attach the credentials we created
@@ -498,7 +483,6 @@ vault policy write jenkins jenkins-policy.hcl
 ### Stage-05:  Slack integration with Jenkins
 1.  go to Manage Jenkins>Manage Credentials > system > Add credentials > secret text file > give some name to credentials, paste the token we create in the Slack app and save and apply.
 1. now to  Manage  Jenkins  >  configure system/system>  search for Slack
- ![](https://github.com/praveensirvi1212/DevSecOps-project/blob/main/Images/slcakws.png)
 3. workspace – your workspace name ( you create after login into Slack)
 4. Credential – attach the slack token
 5. Default channel name – write the channel name we created at the time of slack installation like - #cicd-pipeline
@@ -626,7 +610,7 @@ pipeline {
 ```sh 
 stage('Checkout git') {
             steps {
-              git branch: 'main', url:'https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins.git'
+              git branch: 'main', url:'https://github.com/Nani-roy/DevOps_MasterPiece-CI-with-Jenkins.git'
             }
         }
 ```
@@ -803,7 +787,7 @@ stage('Clone/Pull Repo') {
 
                     } else {
                         echo 'Repo does not exists - Cloning the repo'
-                        sh 'git clone -b feature https://github.com/praveensirvi1212/DevOps_MasterPiece-CD-with-argocd.git'
+                        sh 'git clone -b feature https://github.com/Nani-roy/DevOps_MasterPiece-CD-with-argocd.git'
                     }
                 }
             }
@@ -834,7 +818,7 @@ stage('Commit & Push') {
             steps {
                 withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
                     dir("DevOps_MasterPiece-CD-with-argocd/yamls") {
-                        sh "git config --global user.email 'praveen@gmail.com'"
+                        sh "git config --global user.email 'arijitscr123@gmail.com'"
                         sh 'git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}'
                         sh 'git checkout feature'
                         sh 'git add deployment.yaml'
@@ -900,8 +884,7 @@ def sendSlackNotifcation()
 }
 
  ```
-#### Find the whole pipeline here
- https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/Jenkinsfile
+
 
 ## Step: 7 Project Output
 
@@ -909,51 +892,38 @@ def sendSlackNotifcation()
 ### Jenkins Output : 
 Sorry, I forgot to change the stage name while building the job, but don't worry I made changes in the Jenkins file.
 
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/jenkins.png)
-
 ### Sonarqube Output: 
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/sonarqube.png) 
 
 ### Quality Gate Status in Jenkins
  SonarQube Quality gate status is green and passed.   
 You can apply your custom quality gate like there should be zero ( bug, Vulnerability, code smell ) and if your code has greater than 0 (bugs, vulnerability, code smells). Then your quality gate status will become a failure or red. If your quality gate status becomes a failure, stages after the quality gate will be a failure.
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/quality-gate.png)
 
 ### Trivy report in AWS S3 push by jenkins
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/trivy-report.png) 
-
 
 ### Trivy report 
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/Screenshot%20from%202023-06-23%2023-59-22.png)
-
 
 ### Images in DockerHub pushed by jenkins 
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/dockerhub.png)
 
 ### Image tag updated by jenkins and push changes to feature branch
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/Screenshot%20from%202023-06-24%2000-06-51.png) 
 
 ### Pull Request created by jenkins in DevOps_MasterPiece-CD-with-argocd GitHub repo
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/pr.png)
 
 ### App in ArgoCD  
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/argocd.png)
-
 
 ### Application output deployed in EKS Cluster by ArgoCD 
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/Screenshot%20from%202023-06-22%2023-24-29.png)
+
 
 ### Slack output of jenkins
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/Screenshot%20from%202023-06-22%2023-24-05.png)
+
 
 ### Slack output of ArgoCD
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/Screenshot%20from%202023-06-22%2023-58-34.png)
+
 
 ### Prometheus  
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/Screenshot%20from%202023-06-22%2023-20-00.png)
+
 
 ### Grafana  
-![](https://github.com/praveensirvi1212/DevOps_MasterPiece-CI-with-Jenkins/blob/main/images/Screenshot%20from%202023-06-22%2023-19-50.png)
+
 
 
 
